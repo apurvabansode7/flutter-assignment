@@ -35,16 +35,17 @@ class AppImages {
   static const star = 'lib/assets/images/starr.png';
   static const circle = 'lib/assets/images/circle.png';
   static const insightBg = 'lib/assets/images/insights-background.png';
-  static const leo = 'lib/assets/images/leo.png';
-  static const spine= 'lib/assets/images/spine.png';
-  static const taurus ='lib/assets/images/taurus.png';
-  static const virgo = 'lib/assets/images/virgo.png';
-  static const zodiac = "lib/assets/images/zodiac.png";
-  static const zodiacCancer = 'lib/assets/images/zodiac-cancer.png';
+  static const leo = 'lib/assets/images/leo.svg';
+  static const spine= 'lib/assets/images/spine.svg';
+  static const taurus ='lib/assets/images/taurus.svg';
+  static const virgo = 'lib/assets/images/virgo.svg';
+  static const zodiac = "lib/assets/images/zodiac.svg";
+  static const zodiacCancer = 'lib/assets/images/zodiac-cancer.svg';
   static const ellipse1 = 'lib/assets/images/ellipse1.png';
   static const ellipse2 = 'lib/assets/images/ellipse2.png';
-  static const ellipse3 = 'lib/assets/images/ellipse3.png';
-  static const cancer = 'lib/assets/images/cancer.png';
+  static const ellipse3 = 'lib/assets/images/ellipse3.svg';
+  static const ellipse5 = 'lib/assets/images/ellipse5.svg';
+  static const cancer = 'lib/assets/images/cancer.svg';
   static const starCircle = 'lib/assets/images/star-circle.png';
   static const vector1 = 'lib/assets/images/vector1.png';
   static const vector2 = 'lib/assets/images/vector2.png';
@@ -70,8 +71,9 @@ class AppImages {
   static const mountainRidge = 'lib/assets/images/mountain_ridge.png';
   static const profile ='lib/assets/images/profile.png';
   static const notification = 'lib/assets/images/notification.png';
-  static const path = 'lib/assets/images/path.png';
+  static const  path = 'lib/assets/images/path.png';
   static const man = 'lib/assets/images/man.png';
   static const tree ='lib/assets/images/tree.png';
   static const tree2 = 'lib/assets/images/tree2.png';
+  static const journalOpenCard = 'lib/assets/images/journal_open_card.png';
 }

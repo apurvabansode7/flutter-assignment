@@ -1,6 +1,5 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:test_app/core/constants/app_colors.dart';
 import 'package:test_app/core/constants/app_responsive.dart';
 import 'package:test_app/core/constants/app_typography.dart';
@@ -49,7 +48,7 @@ class AppBottomNavBar extends StatelessWidget {
       child: SafeArea(
         top: false,
         child: SizedBox(
-          height: AppResponsive.heightScale(78),
+          height: AppResponsive.heightScale(72),
           child: Row(
             children: List.generate(items.length, (index) {
               final item = items[index];
@@ -71,26 +70,29 @@ class AppBottomNavBar extends StatelessWidget {
                       // Nav Icon and Label
                       Center(
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            SizedBox(height: AppResponsive.heightScale(6)),
                             AnimatedSwitcher(
                               duration: const Duration(milliseconds: 200),
                               transitionBuilder: (child, animation) =>
                                   ScaleTransition(scale: animation, child: child),
-                              child: Image.asset(
-                                selected ? item.selectedImg : item.img,
-                                key: ValueKey(selected),
-                                width: AppResponsive.widthScale(26),
-                                height: AppResponsive.heightScale(26),
-                                color: color,
+                              child: SizedBox(
+                                width: 24.r,
+                                height: 24.r,
+                                child: Image.asset(
+                                  selected ? item.selectedImg : item.img,
+                                  key: ValueKey(selected),
+                                  fit: BoxFit.contain,
+                                  color: color,
+                                ),
                               ),
                             ),
-                            SizedBox(height: AppResponsive.heightScale(4)),
+                            SizedBox(height: 3.h),
                             AnimatedDefaultTextStyle(
                               duration: const Duration(milliseconds: 200),
                               style: AppTypography.regular12.copyWith(
-                                fontSize: AppResponsive.fontSize(12),
+                                fontSize: 11.sp,
                                 color: color,
                                 fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
                               ),
@@ -126,10 +128,9 @@ class SelectedTabIndicator extends StatelessWidget {
       alignment: Alignment.topCenter,
       clipBehavior: Clip.none,
       children: [
-        
         Container(
           width: AppResponsive.widthScale(32),
-          height: AppResponsive.heightScale(5),
+          height: AppResponsive.heightScale(4),
           decoration: BoxDecoration(
             color: color,
             borderRadius: const BorderRadius.vertical(

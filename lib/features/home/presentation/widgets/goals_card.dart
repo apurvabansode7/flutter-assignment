@@ -179,17 +179,17 @@ class GoalsCard extends StatelessWidget {
                     Text(
                       'No Goals Yet',
                       style: AppTypography.goalCardTitle.copyWith(
-                        fontSize: 20.sp,
+                        fontSize: 19.sp,
                         height: 1.25,
                       ),
                     ),
                     SizedBox(height: 4.h),
                     SizedBox(
-                      width: 155.w,
+                      width: 160.w,
                       child: Text(
                         'Let your intentions guide\nyour journey.',
                         style: AppTypography.goalCardSubtitle.copyWith(
-                          fontSize: 14.sp,
+                          fontSize: 13.sp,
                           height: 1.25,
                           color: const Color(0xFF6E6E73),
                         ),
@@ -201,10 +201,10 @@ class GoalsCard extends StatelessWidget {
 
               // 10. Bottom Button
               Positioned(
-                left: 37.w,
-                right: 44.w,
+                left: 40.w,
+                right: 40.w,
                 bottom: 16.h,
-                height: 35.h,
+                height: 36.h,
                 child: Material(
                   color: Colors.white.withValues(alpha: 0.12),
                   shape: RoundedRectangleBorder(
@@ -233,13 +233,13 @@ class GoalsCard extends StatelessWidget {
                           Icon(
                             Icons.add,
                             color: Colors.white,
-                            size: 18.sp,
+                            size: 16.sp,
                           ),
                           SizedBox(width: 5.w),
                           Text(
                             'Create Your Goal',
                             style: AppTypography.goalCardButtonText.copyWith(
-                              fontSize: 14.sp,
+                              fontSize: 13.5.sp,
                               height: 1.2,
                             ),
                           ),

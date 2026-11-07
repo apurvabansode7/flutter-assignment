@@ -149,7 +149,7 @@ class AppTypography {
   // Destiny Card Typography
   static const destinyCardNumber = TextStyle(
     fontFamily: fontFamily2, // Satoshi
-    fontSize: 38,
+    fontSize: 41,
     fontWeight: FontWeight.w700,
     color: Color(0xFF5D584A),
     height: 1,
@@ -157,7 +157,7 @@ class AppTypography {
 
   static const destinyCardTitle = TextStyle(
     fontFamily: fontFamily, // Geist
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: FontWeight.w700,
     color: AppColors.dark,
     letterSpacing: -0.3,
@@ -166,7 +166,7 @@ class AppTypography {
   static const destinyCardSubtitle = TextStyle(
     fontFamily: fontFamily2, // Satoshi
     fontSize: 14,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w700,
     color: AppColors.color1,
     letterSpacing: 0.1,
   );

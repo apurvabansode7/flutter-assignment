@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:test_app/core/constants/app_colors.dart';
 import 'package:test_app/core/constants/app_images.dart';
 import 'package:test_app/core/constants/app_typography.dart';
+
 import '../../domain/entities/insight_data.dart';
 
 class AstrologyProfileHeader extends StatefulWidget {
-  const AstrologyProfileHeader({
-    super.key,
-    required this.data,
-  });
+  const AstrologyProfileHeader({super.key, required this.data});
 
   final InsightData data;
 
@@ -75,7 +74,7 @@ class _AstrologyProfileHeaderState extends State<AstrologyProfileHeader> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 12.h),
+        SizedBox(height: 10.h),
 
         // 1. User Info Header
         Text(
@@ -89,7 +88,7 @@ class _AstrologyProfileHeaderState extends State<AstrologyProfileHeader> {
         ),
         SizedBox(height: 3.h),
         Text(
-          ' ${widget.data.userBirthDate}',
+          widget.data.userBirthDate,
           style: TextStyle(
             fontFamily: AppTypography.fontFamily2,
             fontSize: 12.sp,
@@ -118,32 +117,31 @@ class _AstrologyProfileHeaderState extends State<AstrologyProfileHeader> {
                   ),
                 ),
               ),
-
+             
               // Middle celestial wheel with constellations
               Positioned(
                 top: 42.h,
                 child: SizedBox(
                   width: 250.w,
                   height: 250.w,
-                  child: Image.asset(
-                    AppImages.ellipse2,
-                    fit: BoxFit.contain,
-                  ),
+                  child: Image.asset(AppImages.ellipse2, fit: BoxFit.contain),
                 ),
               ),
 
               // Inner translucent green
-              Positioned(
-                top: 65.h,
+              Align(
+                alignment: Alignment.center,
                 child: SizedBox(
                   width: 205.w,
                   height: 205.w,
-                  child: Image.asset(
+                  child: SvgPicture.asset(
                     AppImages.ellipse3,
                     fit: BoxFit.contain,
                   ),
                 ),
               ),
+
+
 
               // Sun Sign (Cancer)
               Positioned(
@@ -153,10 +151,10 @@ class _AstrologyProfileHeaderState extends State<AstrologyProfileHeader> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset(
+                    SvgPicture.asset(
                       AppImages.zodiacCancer,
-                      width: 24.w,
-                      height: 24.w,
+                      width: 20.w,
+                      height: 17.h,
                       fit: BoxFit.contain,
                     ),
                     SizedBox(width: 6.w),
@@ -225,10 +223,10 @@ class _AstrologyProfileHeaderState extends State<AstrologyProfileHeader> {
                       ],
                     ),
                     SizedBox(width: 6.w),
-                    Image.asset(
+                    SvgPicture.asset(
                       AppImages.zodiac,
-                      width: 24.w,
-                      height: 24.w,
+                      width: 19.w,
+                      height: 19.h,
                       fit: BoxFit.contain,
                     ),
                   ],
@@ -237,7 +235,7 @@ class _AstrologyProfileHeaderState extends State<AstrologyProfileHeader> {
 
               // Center Illustrated Art
               Positioned(
-                top: 95.h,
+                top: 110.h,
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),
                   transitionBuilder: (child, animation) {
@@ -256,11 +254,12 @@ class _AstrologyProfileHeaderState extends State<AstrologyProfileHeader> {
                   },
                   child: SizedBox(
                     key: ValueKey<String>(_currentSignData.name),
-                    width: 135.w,
-                    height: 135.w,
-                    child: Image.asset(
+                  
+                    child: SvgPicture.asset(
                       _currentSignData.image,
-                      fit: BoxFit.contain,
+                    
+                        width: 114.w,
+                    height: 125.h,
                     ),
                   ),
                 ),
@@ -269,36 +268,36 @@ class _AstrologyProfileHeaderState extends State<AstrologyProfileHeader> {
               // 5 Orbiting Circular Sign Buttons along the lower arc
               // 1. Cancer
               Positioned(
-                left: 63.w,
+                left: 33.w,
                 top: 168.h,
                 child: _buildSignChip(_zodiacSigns[0]),
               ),
 
               // 2. Virgo
               Positioned(
-                left: 102.w,
+                left: 55.w,
                 top: 223.h,
                 child: _buildSignChip(_zodiacSigns[1]),
               ),
 
               // 3. Leo
               Positioned(
-                left: 154.w,
-                top: 242.h,
+                left: 130.w,
+                top: 255.h,
                 child: _buildSignChip(_zodiacSigns[2], isBottomCenter: true),
               ),
 
               // 4. Aries
               Positioned(
-                left: 214.w,
-                top: 223.h,
-                child: _buildSignChip(_zodiacSigns[3]),
+                left: 220.w,
+                top: 245.h,
+                child: _buildSignChip(_zodiacSigns[3] ,),
               ),
 
               // 5. Taurus
               Positioned(
-                left: 253.w,
-                top: 168.h,
+                left: 260.w,
+                top: 200.h,
                 child: _buildSignChip(_zodiacSigns[4]),
               ),
 
@@ -325,7 +324,7 @@ class _AstrologyProfileHeaderState extends State<AstrologyProfileHeader> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(AppImages.starCircle, width: 52.w, height: 17.h,)
+              Image.asset(AppImages.starCircle, width: 52.w, height: 17.h),
             ],
           ),
         ),
@@ -353,17 +352,12 @@ class _AstrologyProfileHeaderState extends State<AstrologyProfileHeader> {
         padding: EdgeInsets.all(isBottomCenter ? 7.w : 6.w),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: isBottomCenter && isSelected
-              ? null
-              : sign.bgColor,
+          color: isBottomCenter && isSelected ? null : sign.bgColor,
           gradient: isBottomCenter && isSelected
               ? const LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0xFFFFF6E5),
-                    Color(0xFFFFE6BE),
-                  ],
+                  colors: [Color(0xFFFFF6E5), Color(0xFFFFE6BE)],
                 )
               : null,
           // CRITICAL: Each sign retains ITS OWN distinct border color!
@@ -381,10 +375,7 @@ class _AstrologyProfileHeaderState extends State<AstrologyProfileHeader> {
             ),
           ],
         ),
-        child: Image.asset(
-          sign.image,
-          fit: BoxFit.contain,
-        ),
+        child: SvgPicture.asset(sign.image, fit: BoxFit.contain , ),
       ),
     );
   }

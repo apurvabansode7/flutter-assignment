@@ -55,9 +55,9 @@ class AppColors {
   static const journalEntryBorderTop = Color(0xFFF4F4F4);
   static const journalEntryBorderBottom = Color(0xFFB8E2E2);
 
-  // Card Background: linear-gradient(180deg, #FFFFFF 0%, #ECF6F6 100%)
+  // Card Background: linear-gradient(180deg, #FFFFFF 0%, #E9F5F5 100%)
   static const journalEntryBgTop = Color(0xFFFFFFFF);
-  static const journalEntryBgBottom = Color(0xFFECF6F6);
+  static const journalEntryBgBottom = Color(0xFFE9F5F5);
 
   // Focus of the Day Card colors
   static const focusCardBgTop = Color(0xFFEAF5F7);
@@ -70,15 +70,22 @@ class AppColors {
   static const horoscopeInsightBg = Color(0xFFFEFBEC);
   static const horoscopeInsightBorder = Color(0xFFFEF2C2);
   static const transparent = Colors.transparent;
-  static const yrsColor = Color(0xFFFEFAE8);
-  static const inactiveColor = Color(0xFFBEBBAB);
-  static const monthColor = Color(0xFFF5EDB8);
-  static const dayColor = Color(0xFFD8C98F);
-  static const hourColor = Color(0xFF4A8E9B);
-  static const minsColor = Color(0xFF7BBAC7);
-  static const minsColorInactive = Color(0xFF3A6E7A);
-  static const secColorInactive =Color(0xFF5A8A96);
-  static const secColors = Color(0xFFB8DDE6);
+  static const yrsColor = Color(0xFFFEFBEC);
+  static const inactiveColor = Color(0xFFDAD8CB);
+  static const monthColor = Color(0xFFFEF2C2);
+  static const dayColor = Color(0xFFDFD4AA);
+  static const hourColor = Color(0xFF659BA5);
+  static const minsColor = Color(0xFF84BAC4);
+  static const minsColorInactive = Color(0xFF659BA5);
+  static const secColorInactive = Color(0xFF689096);
+  static const secColors = Color(0xFFA9D1D9);
+  static const dialActiveColor = Color(0xFF141414);
+  static const yrsInactiveColor = Color(0xFFDAD8CB);
+  static const monthInactiveColor = Color(0xFFBEB691);
+  static const dayInactiveColor = Color(0xFFA8A080);
+  static const hourInactiveColor = Color(0xFF50777C);
   static const homebgColor = Color(0xFF0A2A31);
   static const tabColor= Color(0xFFC7C7CC);
+  static const color2 = Color(0xFF6E6E73);
+  static const color3 = Color(0xFFDCE6E8);
 }

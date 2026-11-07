@@ -36,7 +36,7 @@ class TodayHoroscopeCard extends StatelessWidget {
           color: AppColors.horoscopeInsightBg,
           borderRadius: BorderRadius.circular(22.r),
           border: Border.all(
-            color: AppColors.horoscopeInsightBorder,
+            color: const Color(0xFFF3EAC2),
             width: 1.2.w,
           ),
           boxShadow: [

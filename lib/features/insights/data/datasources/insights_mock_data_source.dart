@@ -14,7 +14,7 @@ class InsightsMockDataSource implements InsightsDataSource {
       case InsightPeriod.yesterday:
         return const InsightDataModel(
           userName: 'Gilli Gaurav Singh',
-          userBirthDate: 'Sept 22, 2001',
+          userBirthDate: 'You • Sept 22, 2001',
           sunSign: 'Cancer',
           moonSign: 'Leo',
           focusArea: 'Reflection',

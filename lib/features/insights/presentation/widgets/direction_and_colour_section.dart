@@ -25,8 +25,8 @@ class DirectionAndColourSection extends StatelessWidget {
           child: _AttributeCardItem(
             title: 'Favourable Direction',
             imagePath: AppImages.direction,
-            imageWidth: 96.w,
-            imageHeight: 96.h,
+            imageWidth: 99.w,
+            imageHeight: 116.h,
             value: direction,
           ),
         ),
@@ -38,8 +38,8 @@ class DirectionAndColourSection extends StatelessWidget {
           child: _AttributeCardItem(
             title: 'Lucky Colour',
             imagePath: AppImages.flower,
-            imageWidth: 80.w,
-            imageHeight: 80.h,
+            imageWidth: 66.w,
+            imageHeight: 76.h,
             value: colour,
           ),
         ),
@@ -77,7 +77,7 @@ class _AttributeCardItem extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
             fontFamily: AppTypography.fontFamily2,
-            fontSize: 15.sp,
+            fontSize: 14.sp,
             fontWeight: FontWeight.w700,
             color: AppColors.dark,
           ),
@@ -120,8 +120,8 @@ class _AttributeCardItem extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: AppTypography.fontFamily2,
-                    fontSize: 15.sp,
-                    fontWeight: FontWeight.w800,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w900,
                     color: const Color(0xFF1B7F8C),
                   ),
                 ),

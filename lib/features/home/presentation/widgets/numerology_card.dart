@@ -9,8 +9,9 @@ class NumerologyCard extends StatelessWidget {
     super.key,
     this.title = 'Lucky Number',
     this.luckyNumber = 5,
-     this.showLuckyNumber = false,
-    this.guidanceTitle = "Today’s guidance:",
+    this.showLuckyNumber = false,
+    this.useHomeStyle = false,
+    this.guidanceTitle = "Today's guidance:",
     this.guidanceText =
         'Stay open to unexpected opportunities. Trust '
         'your instincts, explore something new, and avoid '
@@ -20,6 +21,7 @@ class NumerologyCard extends StatelessWidget {
   final String title;
   final int? luckyNumber;
   final bool showLuckyNumber;
+  final bool useHomeStyle;
   final String guidanceTitle;
   final String guidanceText;
 
@@ -113,15 +115,39 @@ class NumerologyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cardGradient = useHomeStyle
+        ? const LinearGradient(
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+            colors: [
+              AppColors.numerologyGradientStart,
+              AppColors.numerologyGradientEnd,
+            ],
+            stops: [0.3391, 0.9923],
+          )
+        : const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFFFFDF5), Color(0xFFFAF3DF), AppColors.white],
+            stops: [0.0, 0.45, 1.0],
+          );
+
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24.r),
-        gradient: const LinearGradient(
-          begin: Alignment.bottomLeft,
-          end: Alignment.topRight,
-          colors: [Color(0xFFFEF8E0), Color(0xFFCBC19B)],
-          stops: [0.3391, 0.923],
-        ),
+        borderRadius: BorderRadius.circular(20.r),
+        border: useHomeStyle
+            ? null
+            : Border.all(color: const Color(0xFFEDE4C2), width: 1.w),
+        gradient: useHomeStyle
+            ? const LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                colors: [
+                  AppColors.numerologyBorderStart,
+                  AppColors.white,
+                ],
+              )
+            : null,
         boxShadow: [
           BoxShadow(
             color: AppColors.dark.withValues(alpha: 0.04),
@@ -130,10 +156,16 @@ class NumerologyCard extends StatelessWidget {
           ),
         ],
       ),
+      padding: useHomeStyle ? EdgeInsets.all(1.w) : EdgeInsets.zero,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(23.r),
         child: Stack(
           children: [
+            Positioned.fill(
+              child: DecoratedBox(
+                decoration: BoxDecoration(gradient: cardGradient),
+              ),
+            ),
             // 1. Background numbers (1 to 9)
             Positioned.fill(
               child: LayoutBuilder(
@@ -169,11 +201,12 @@ class NumerologyCard extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: AppTypography.regular12.copyWith(
+                    style: TextStyle(
+                      fontFamily: AppTypography.fontFamily2,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w700,
                       color: AppColors.color1,
-                      fontFamily: AppTypography.fontFamily2,
+                      letterSpacing: 0.2,
                     ),
                   ),
                   SizedBox(height: 14.h),
@@ -222,24 +255,24 @@ class NumerologyCard extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       guidanceTitle,
-                      style: AppTypography.regular12.copyWith(
-                        fontSize: 14.sp,
+                      style: TextStyle(
+                        fontFamily: AppTypography.fontFamily2,
+                        fontSize: 13.5.sp,
                         fontWeight: FontWeight.bold,
                         color: AppColors.dark,
-                        fontFamily: AppTypography.fontFamily2,
                       ),
                     ),
                   ),
-                  SizedBox(height: 7.h),
+                  SizedBox(height: 6.h),
 
                   Text(
                     guidanceText,
-                    style: AppTypography.regular12.copyWith(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.dark,
+                    style: TextStyle(
                       fontFamily: AppTypography.fontFamily2,
-                      height: 1.45,
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF2B2B2B),
+                      height: 1.4,
                     ),
                   ),
                 ],

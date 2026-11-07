@@ -121,7 +121,7 @@ class HoroscopeCard extends StatelessWidget {
                     Text(
                       title,
                       style: AppTypography.horoscopeTitle.copyWith(
-                        fontSize: 20.sp,
+                        fontSize: 19.sp,
                       ),
                     ),
                     SizedBox(height: 3.h),
@@ -133,7 +133,7 @@ class HoroscopeCard extends StatelessWidget {
                         fontSize: 12.sp,
                       ),
                     ),
-                    SizedBox(height: 18.h),
+                    SizedBox(height: 16.h),
 
                     // Body Paragraph
                     Padding(
@@ -141,8 +141,9 @@ class HoroscopeCard extends StatelessWidget {
                       child: Text(
                         description,
                         style: AppTypography.horoscopeBody.copyWith(
-                          fontSize: 14.sp,
-                          letterSpacing: -0.02 * 14.sp,
+                          fontSize: 13.5.sp,
+                          height: 1.35,
+                          letterSpacing: -0.02 * 13.5.sp,
                         ),
                       ),
                     ),
@@ -167,12 +168,12 @@ class HoroscopeCard extends StatelessWidget {
 
               // 3. Golden Zodiac Coin Medallion 
               Positioned(
-                right: 28.w,
-                top: -30.h,
+                right: 24.w,
+                top: -26.h,
                 child: Image.asset(
                   AppImages.sign,
-                  width: 88.w,
-                  height: 88.h,
+                  width: 84.w,
+                  height: 84.h,
                   fit: BoxFit.contain,
                   errorBuilder: (_, _, _) => Container(
                     width: 88.w,

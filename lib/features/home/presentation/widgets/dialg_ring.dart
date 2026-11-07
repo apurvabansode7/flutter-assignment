@@ -32,6 +32,7 @@ class DialRingConfig {
 
   /// Returns current position in units (can be fractional for smooth turns).
   final double Function(DateTime now) unitsOf;
+  
 }
 
 double _localMs(DateTime t) =>

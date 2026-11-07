@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,7 +5,6 @@ import 'package:shimmer/shimmer.dart';
 
 import 'package:test_app/core/constants/app_colors.dart';
 import 'package:test_app/core/constants/app_images.dart';
-import 'package:test_app/core/constants/app_responsive.dart';
 import 'package:test_app/core/constants/app_typography.dart';
 
 import 'package:test_app/features/home/presentation/widgets/journal_notebook_cover.dart';
@@ -25,9 +23,9 @@ class JournalScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => JournalBloc(
-        dataSource: JournalMockDataSource(),
-      )..add(LoadJournalEvent()),
+      create: (_) =>
+          JournalBloc(dataSource: JournalMockDataSource())
+            ..add(LoadJournalEvent()),
       child: const JournalView(),
     );
   }
@@ -42,30 +40,26 @@ class JournalView extends StatefulWidget {
 
 class _JournalViewState extends State<JournalView> {
   final List<String> _months = const [
-    'Jan', 'Feb', 'Mar', 'Apr',
-    'May', 'Jun', 'Jul', 'Aug',
-    'Sep', 'Oct', 'Nov', 'Dec',
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
   ];
 
-  String _selectedMonth = 'Aug';
+  String _selectedMonth = 'Oct';
 
   void _onMonthSelected(String month) {
     setState(() {
       _selectedMonth = month;
     });
-  }
-
-  Future<void> _handleRefresh() async {
-    final bloc = context.read<JournalBloc>();
-
-    final nextState = bloc.stream.firstWhere(
-      (state) =>
-          state is JournalLoaded || state is JournalError,
-    );
-
-    bloc.add(RefreshJournalEvent());
-
-    await nextState;
   }
 
   @override
@@ -78,7 +72,7 @@ class _JournalViewState extends State<JournalView> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              AppColors.journalGradientEnd,
+              Color(0xFFD8E9EA), // Soft celestial pale cyan matching Figma
               AppColors.white,
             ],
             stops: [0.0, 0.35],
@@ -86,192 +80,193 @@ class _JournalViewState extends State<JournalView> {
         ),
         child: SafeArea(
           bottom: false,
-          child: RefreshIndicator(
-            color: AppColors.primary,
-            backgroundColor: Colors.white,
-            onRefresh: _handleRefresh,
-            child: SingleChildScrollView(
-              // physics: const AlwaysScrollableScrollPhysics(
-              //   parent: BouncingScrollPhysics(),
-              // ),
-              padding: EdgeInsets.symmetric(
-                horizontal: AppResponsive.horizontalPadding(context),
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(top: 10.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 12.h),
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics(),
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Padding(
+              padding: EdgeInsets.only(top: 10.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 12.h),
 
-                    // Header
-                    Text(
-                      'Your Journal',
-                      style: TextStyle(
-                        fontFamily: AppTypography.fontFamily,
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.dark,
-                        letterSpacing: -0.5,
-                      ),
+                  // Header
+                  Text(
+                    'Your Journal',
+                    style: TextStyle(
+                      fontFamily: AppTypography.fontFamily,
+                      fontSize: 24.sp,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.dark,
+                      letterSpacing: -0.5,
                     ),
+                  ),
 
-                    SizedBox(height: 4.h),
+                  SizedBox(height: 4.h),
 
-                    Text(
-                      'A Space To Be You',
-                      style: TextStyle(
-                        fontFamily: AppTypography.fontFamily2,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                        color: const Color(0xFF6E6E73),
-                      ),
+                  Text(
+                    'A Space To Be You',
+                    style: TextStyle(
+                      fontFamily: AppTypography.fontFamily2,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF6E6E73),
                     ),
+                  ),
 
-                    SizedBox(height: 20.h),
+                  SizedBox(height: 20.h),
 
-                    // Notebook Cover
-                    const Center(
-                      child: Hero(
-                        tag: 'journal_screen_notebook_cover',
-                        child: JournalNotebookCover(),
-                      ),
+                  // Notebook Cover
+                  const Center(
+                    child: Hero(
+                      tag: 'journal_screen_notebook_cover',
+                      child: JournalNotebookCover(),
                     ),
+                  ),
 
-                    SizedBox(height: 24.h),
+                  SizedBox(height: 18.h),
 
-                    // Month Filter
-                    JournalMonthFilter(
-                      months: _months,
-                      selectedMonth: _selectedMonth,
-                      onMonthSelected: _onMonthSelected,
+                  // Month Filter
+                  JournalMonthFilter(
+                    months: _months,
+                    selectedMonth: _selectedMonth,
+                    onMonthSelected: _onMonthSelected,
+                  ),
+
+                  SizedBox(height: 17.h),
+
+                  // Star Divider
+                  Center(
+                    child: Image.asset(
+                      AppImages.star,
+                      width: 204.w,
+                      height: 17.h,
                     ),
+                  ),
 
-                    SizedBox(height: 17.h),
+                  SizedBox(height: 32.h),
 
-                    // Star Divider
-                    SizedBox(
-                      width: double.infinity,
-                      child: Image.asset(
-                        AppImages.star,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-
-                    SizedBox(height: 32.h),
-
-                    // Recent Entries Header
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Recent Entries',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontFamily: AppTypography.fontFamily,
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.dark,
-                            ),
+                  // Recent Entries Header
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Recent Entries',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontFamily: AppTypography.fontFamily,
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.dark,
                           ),
                         ),
+                      ),
 
-                        TextButton.icon(
-                          onPressed: () {
-                            AddEntryBottomSheet.show(context);
-                          },
-                          icon: Icon(
-                            Icons.add,
-                            size: 16.r,
+                      TextButton.icon(
+                        onPressed: () {
+                          AddEntryBottomSheet.show(context);
+                        },
+                        icon: Icon(
+                          Icons.add,
+                          size: 16.r,
+                          color: AppColors.primary,
+                        ),
+                        label: Text(
+                          'Add Entry',
+                          style: TextStyle(
+                            fontFamily: AppTypography.fontFamily2,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w500,
                             color: AppColors.primary,
                           ),
-                          label: Text(
-                            'Add Entry',
-                            style: TextStyle(
-                              fontFamily: AppTypography.fontFamily2,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.primary,
-                            ),
-                          ),
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.symmetric(horizontal: 8.w),
-                            minimumSize: Size.zero,
-                            tapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                          ),
                         ),
-                      ],
-                    ),
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 8.w),
+                          minimumSize: Size.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                      ),
+                    ],
+                  ),
 
-                    SizedBox(height: 14.h),
+                  SizedBox(height: 14.h),
 
-                    // BLoC Journal Data
-                    BlocBuilder<JournalBloc, JournalState>(
-                      builder: (context, state) {
-                        if (state is JournalLoading ||
-                            state is JournalInitial) {
-                          return _buildShimmer();
-                        }
+                  // BLoC Journal Data
+                  BlocBuilder<JournalBloc, JournalState>(
+                    builder: (context, state) {
+                      if (state is JournalLoading || state is JournalInitial) {
+                        return _buildShimmer();
+                      }
 
-                        if (state is JournalError) {
-                          return Center(
-                            child: Column(
-                              children: [
-                                Text(
-                                  state.message,
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    color: AppColors.dark,
-                                  ),
+                      if (state is JournalError) {
+                        return Center(
+                          child: Column(
+                            children: [
+                              Text(
+                                state.message,
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: AppColors.dark,
                                 ),
-                                TextButton(
-                                  onPressed: () {
-                                    context.read<JournalBloc>().add(
-                                      LoadJournalEvent(),
-                                    );
-                                  },
-                                  child: const Text('Try Again'),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-
-                        if (state is JournalLoaded) {
-                          if (state.entries.isEmpty) {
-                            return const Center(
-                              child: Text('No journal entries yet.'),
-                            );
-                          }
-
-                          return ListView.builder(
-                            shrinkWrap: true,
-                            physics:
-                                const NeverScrollableScrollPhysics(),
-                            itemCount: state.entries.length,
-                            itemBuilder: (context, index) {
-                              final entry = state.entries[index];
-
-                              return JournalEntryCard(
-                                entry: entry,
-                                onTap: () {
-                                  _showEntryDetail(context, entry);
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  context.read<JournalBloc>().add(
+                                    LoadJournalEvent(),
+                                  );
                                 },
-                              );
-                            },
+                                child: const Text('Try Again'),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+
+                      if (state is JournalLoaded) {
+                        if (state.entries.isEmpty) {
+                          return const Center(
+                            child: Text('No journal entries yet.'),
                           );
                         }
 
-                        return const SizedBox.shrink();
-                      },
-                    ),
+                        final filtered = state.entries
+                            .where(
+                              (e) =>
+                                  e.month.toLowerCase() ==
+                                  _selectedMonth.toLowerCase(),
+                            )
+                            .toList();
+                        final entriesToRender = filtered.isNotEmpty
+                            ? filtered
+                            : state.entries;
 
-                    SizedBox(height: 24.h),
-                  ],
-                ),
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: entriesToRender.length,
+                          itemBuilder: (context, index) {
+                            final entry = entriesToRender[index];
+
+                            return JournalEntryCard(
+                              entry: entry,
+                              onTap: () {
+                                _showEntryDetail(context, entry);
+                              },
+                            );
+                          },
+                        );
+                      }
+
+                      return const SizedBox.shrink();
+                    },
+                  ),
+
+                  SizedBox(height: 24.h),
+                ],
               ),
             ),
           ),
@@ -303,10 +298,7 @@ class _JournalViewState extends State<JournalView> {
   }
 
   // Journal Entry Details
-  void _showEntryDetail(
-    BuildContext context,
-    JournalEntryModel entry,
-  ) {
+  void _showEntryDetail(BuildContext context, JournalEntryModel entry) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -314,9 +306,7 @@ class _JournalViewState extends State<JournalView> {
       builder: (_) => Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(28.r),
-          ),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),
         ),
         padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 32.h),
         child: Column(

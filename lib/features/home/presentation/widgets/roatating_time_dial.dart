@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:test_app/core/constants/app_colors.dart';
 
@@ -18,7 +19,6 @@ const double _kStepAngle = 12.0 * math.pi / 180;
 /// Number of slots visible to the left and right of the active center number.
 /// Exactly 3 on the left, 1 in the centre, 3 on the right = 7 numbers total.
 const int _kVisibleWindow = 3;
-
 
 class DialRing {
   const DialRing({
@@ -45,10 +45,9 @@ class DialRing {
 }
 
 //  6 Concentric Rings (Outer to Inner) 
-// Precise Figma specs:
-//   • Year dial: 36px selected, 28px unselected
-//   • Seconds dial: 16px selected, 13px unselected
-//   • Proportional scaling for Mm, Days, Hrs, Mins
+// Calibrated to exact Figma reference and scaled responsively with .sp:
+//   • Selected numbers: bold, dark, prominent
+//   • Unselected numbers: scaled down and subtly colored for breathing room
 
 final List<DialRing> dialRings = [
   // 1. Yrs – outermost, cream-white
@@ -57,10 +56,10 @@ final List<DialRing> dialRings = [
     outerFraction: 1.000,
     labelFraction: 0.915,
     bandColor: AppColors.yrsColor,
-    activeColor: AppColors.numerologyGuidanceTitle,
-    inactiveColor: AppColors.inactiveColor,
-    activeFontSize: 36,   // Figma selected: 36px
-    inactiveFontSize: 28, // Figma unselected: 28px
+    activeColor: const Color(0xFF141414),
+    inactiveColor: const Color(0xFFBEBBAB),
+    activeFontSize: 28,
+    inactiveFontSize: 18,
     getValue: (t) => t.year % 100,
   ),
 
@@ -70,10 +69,10 @@ final List<DialRing> dialRings = [
     outerFraction: 0.835,
     labelFraction: 0.755,
     bandColor: AppColors.monthColor,
-    activeColor: AppColors.numerologyGuidanceTitle,
-    inactiveColor: AppColors.inactiveColor,
-    activeFontSize: 32,
-    inactiveFontSize: 25,
+    activeColor: const Color(0xFF141414),
+    inactiveColor: const Color(0xFFB8AF85),
+    activeFontSize: 26,
+    inactiveFontSize: 16,
     getValue: (t) => t.month,
   ),
 
@@ -83,10 +82,10 @@ final List<DialRing> dialRings = [
     outerFraction: 0.670,
     labelFraction: 0.585,
     bandColor: AppColors.dayColor,
-    activeColor: AppColors.numerologyGuidanceTitle,
-    inactiveColor: AppColors.inactiveColor,
-    activeFontSize: 28,
-    inactiveFontSize: 22,
+    activeColor: const Color(0xFF141414),
+    inactiveColor: const Color(0xFFA3966D),
+    activeFontSize: 23,
+    inactiveFontSize: 15,
     getValue: (t) => t.day,
   ),
 
@@ -96,10 +95,10 @@ final List<DialRing> dialRings = [
     outerFraction: 0.520,
     labelFraction: 0.445,
     bandColor: AppColors.hourColor,
-    activeColor: AppColors.numerologyGuidanceTitle,
-    inactiveColor: AppColors.inactiveColor,
-    activeFontSize: 24,
-    inactiveFontSize: 19,
+    activeColor: const Color(0xFF141414),
+    inactiveColor: const Color(0xFF2C5E68),
+    activeFontSize: 20,
+    inactiveFontSize: 13,
     getValue: (t) => t.hour,
   ),
 
@@ -109,10 +108,10 @@ final List<DialRing> dialRings = [
     outerFraction: 0.380,
     labelFraction: 0.310,
     bandColor: AppColors.minsColor,
-    activeColor: AppColors.numerologyGuidanceTitle,
-    inactiveColor: AppColors.minsColorInactive,
-    activeFontSize: 20,
-    inactiveFontSize: 16,
+    activeColor: const Color(0xFF141414),
+    inactiveColor: const Color(0xFF3B7A87),
+    activeFontSize: 17,
+    inactiveFontSize: 11,
     getValue: (t) => t.minute,
   ),
 
@@ -122,15 +121,13 @@ final List<DialRing> dialRings = [
     outerFraction: 0.250,
     labelFraction: 0.200,
     bandColor: AppColors.secColors,
-    activeColor: AppColors.numerologyGuidanceTitle,
-    inactiveColor:AppColors.secColorInactive,
-    activeFontSize: 13.5, // Crisp 2-digit clarity without colliding
-    inactiveFontSize: 10.5, // Scaled for breathing room between 2-digit seconds
+    activeColor: const Color(0xFF141414),
+    inactiveColor: const Color(0xFF5A8A96),
+    activeFontSize: 14,
+    inactiveFontSize: 9.5,
     getValue: (t) => t.second,
   ),
 ];
-
-
 
 // RotatingTimeDial Widget 
 
@@ -144,22 +141,39 @@ class RotatingTimeDial extends StatefulWidget {
   State<RotatingTimeDial> createState() => _RotatingTimeDialState();
 }
 
-class _RotatingTimeDialState extends State<RotatingTimeDial> {
+class _RotatingTimeDialState extends State<RotatingTimeDial>
+    with SingleTickerProviderStateMixin {
   late DateTime _now;
   Timer? _timer;
+  late final AnimationController _animController;
+  late final Animation<double> _easeAnimation;
 
   @override
   void initState() {
     super.initState();
     _now = DateTime.now();
+    _animController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 380),
+    );
+    _easeAnimation = CurvedAnimation(
+      parent: _animController,
+      curve: Curves.easeOutCubic,
+    );
+    _animController.forward(from: 1.0);
+
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (mounted) setState(() => _now = DateTime.now());
+      if (mounted) {
+        setState(() => _now = DateTime.now());
+        _animController.forward(from: 0.0);
+      }
     });
   }
 
   @override
   void dispose() {
     _timer?.cancel();
+    _animController.dispose();
     super.dispose();
   }
 
@@ -182,13 +196,19 @@ class _RotatingTimeDialState extends State<RotatingTimeDial> {
               totalRadius: r,
             ),
 
-          // 2. Numbers on each ring, aligned on radial rays
-          // Exactly 7 numbers per dial: 3 left, 1 centre (selected), 3 right
+          // 2. Numbers on each ring, aligned on radial rays with smooth transitions
           for (final ring in dialRings)
-            _RingRayNumbers(
-              ring: ring,
-              radius: r,
-              activeValue: ring.getValue(_now),
+            AnimatedBuilder(
+              animation: _easeAnimation,
+              builder: (context, _) {
+                final animProgress = ring.label == 'Sec' ? _easeAnimation.value : 1.0;
+                return _RingRayNumbers(
+                  ring: ring,
+                  radius: r,
+                  activeValue: ring.getValue(_now),
+                  animationProgress: animProgress,
+                );
+              },
             ),
         ],
       ),
@@ -241,11 +261,13 @@ class _RingRayNumbers extends StatelessWidget {
     required this.ring,
     required this.radius,
     required this.activeValue,
+    this.animationProgress = 1.0,
   });
 
   final DialRing ring;
   final double radius;
   final int activeValue;
+  final double animationProgress;
 
   @override
   Widget build(BuildContext context) {
@@ -253,6 +275,9 @@ class _RingRayNumbers extends StatelessWidget {
     final center = radius;
 
     final widgets = <Widget>[];
+
+    // Sub-step angle offset for silky smooth gliding transitions
+    final angleOffset = (1.0 - animationProgress) * _kStepAngle;
 
     for (var k = -_kVisibleWindow; k <= _kVisibleWindow; k++) {
       final isActive = (k == 0);
@@ -274,23 +299,27 @@ class _RingRayNumbers extends StatelessWidget {
 
       final displayString = '$number';
 
-      // Angle of this number relative to dial center
-      final angle = _kPointerAngle + k * _kStepAngle;
+      // Angle of this number relative to dial center with smooth motion
+      final angle = _kPointerAngle + k * _kStepAngle + angleOffset;
 
       // Position of this number's box
       final cx = center + ringR * math.cos(angle);
       final cy = center + ringR * math.sin(angle);
 
-      final fontSize = isActive ? ring.activeFontSize : ring.inactiveFontSize;
+      //final fontSize = (isActive ? ring.activeFontSize : ring.inactiveFontSize).sp;
+      final fontSize = (isActive
+    ? ring.activeFontSize
+    : ring.inactiveFontSize).sp;
       final fontColor = isActive ? ring.activeColor : ring.inactiveColor;
-      final letterSpacing = ring.label == 'Sec'
-          ? -0.04 * fontSize
-          : -0.02 * fontSize;
+      final letterSpacing = -0.02 * fontSize;
 
-      // Responsive box half-size so numbers never clip
+      // Responsive box half-size so numbers never clip on any display
+      // final boxHalf = ring.label == 'Sec'
+      //     ? (isActive ? 16.0.r : 12.0.r)
+      //     : (isActive ? 26.0.r : 18.0.r);
       final boxHalf = ring.label == 'Sec'
-          ? (isActive ? 16.0 : 12.0)
-          : (isActive ? 30.0 : 22.0);
+    ? (isActive ? 16.0.r : 12.0.r)
+    : (isActive ? 26.0.r : 18.0.r);
 
       widgets.add(
         Positioned(
@@ -310,7 +339,7 @@ class _RingRayNumbers extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   color: fontColor,
                   letterSpacing: letterSpacing,
-                  height: 1.29,
+                  height: 1.15,
                 ),
               ),
             ),

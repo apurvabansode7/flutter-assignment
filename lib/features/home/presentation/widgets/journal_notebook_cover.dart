@@ -57,13 +57,7 @@ class _JournalNotebookCoverState extends State<JournalNotebookCover> {
         height: widget.height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(22.r),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.dark.withValues(alpha: 0.12),
-              blurRadius: 20,
-              offset: const Offset(0, 10),
-            ),
-          ],
+         
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(22.r),
@@ -111,10 +105,10 @@ class _JournalNotebookCoverState extends State<JournalNotebookCover> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "${_currentName.toUpperCase()}’S JOURNAL",
+                                      "${_currentName.toUpperCase()}'S JOURNAL",
                                       style: TextStyle(
                                         fontFamily: AppTypography.fontFamily,
-                                        fontSize: 16.sp,
+                                        fontSize: 15.sp,
                                         fontWeight: FontWeight.w900,
                                         color: const Color(0xFF0F363E),
                                         letterSpacing: 0.8,

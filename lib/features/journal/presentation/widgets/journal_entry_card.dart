@@ -29,17 +29,17 @@ class JournalEntryCard extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            AppColors.journalEntryBorderTop,    // #F4F4F4 0%
-            AppColors.journalEntryBorderBottom, // #B8E2E2 100%
+            AppColors.journalEntryBorderTop,
+            AppColors.journalEntryBorderBottom,
           ],
         ),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF13434C).withValues(alpha: 0.04),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: const Color(0xFF13434C).withValues(alpha: 0.04),
+        //     blurRadius: 10,
+        //     offset: const Offset(0, 4),
+        //   ),
+        // ],
       ),
       child: Container(
         margin: EdgeInsets.all(1.w), // 1px border width
@@ -49,8 +49,8 @@ class JournalEntryCard extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              AppColors.journalEntryBgTop,    // #FFFFFF 0%
-              AppColors.journalEntryBgBottom, // #ECF6F6 100%
+              AppColors.journalEntryBgTop,
+              AppColors.journalEntryBgBottom,
             ],
           ),
         ),
@@ -88,7 +88,7 @@ class JournalEntryCard extends StatelessWidget {
                             fontFamily: AppTypography.fontFamily2,
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w700,
-                            color: Colors.black,
+                            color: AppColors.dark,
                             height: 1.0,
                           ),
                         ),
@@ -97,9 +97,9 @@ class JournalEntryCard extends StatelessWidget {
                           weekday,
                           style: TextStyle(
                             fontFamily: AppTypography.fontFamily2,
-                            fontSize: 13.sp,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w500,
-                            color: const Color(0xFF6E6E73),
+                            color: AppColors.color2,
                             height: 1.0,
                           ),
                         ),
@@ -113,7 +113,7 @@ class JournalEntryCard extends StatelessWidget {
                   Container(
                     width: 1.w,
                     height: 64.h,
-                    color: const Color(0xFFDCE6E8),
+                    color: AppColors.color3,
                   ),
 
                   SizedBox(width: 14.w),
@@ -135,14 +135,14 @@ class JournalEntryCard extends StatelessWidget {
                                   fontFamily: AppTypography.fontFamily2,
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w700,
-                                  color: Colors.black,
+                                  color: AppColors.dark,
                                 ),
                               ),
                             ),
                             Icon(
                               Icons.chevron_right_rounded,
                               size: 22.r,
-                              color: Colors.black,
+                              color: AppColors.dark,
                             ),
                           ],
                         ),
